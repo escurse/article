@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.escass.bbs.mappers.ArticleMapper">
+    <insert id="insertArticle"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.escass.bbs.entities.ArticleEntity">
+        INSERT INTO `test_bbs`.`articles` (`writer`, `title`, `content`, `created_at`, `modified_at`, `view`, `is_deleted`)
+        VALUES (#{writer}, #{title}, #{content}, #{createdAt}, #{modifiedAt}, #{view}, #{isDeleted})
+    </insert>
+    <update id="updateArticle"
+            parameterType="com.escass.bbs.entities.ArticleEntity">
+        UPDATE `test_bbs`.`articles`
+        SET `writer`      = #{writer},
+            `title`       = #{title},
+            `content`     = #{content},
+            `created_at`  = #{createdAt},
+            `modified_at` = #{modifiedAt},
+            `view`        = #{view},
+            `is_deleted`  = #{isDeleted}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+    <select id="selectArticles"
+            resultType="com.escass.bbs.entities.ArticleEntity">
+        SELECT `index`       AS `index`,
+               `writer`      AS `writer`,
+               `title`       AS `title`,
+               `content`     AS `content`,
+               `created_at`  AS `createdAt`,
+               `modified_at` AS `modifiedAt`,
+               `view`        AS `view`,
+               `is_deleted`  AS `isDeleted`
+        FROM `test_bbs`.`articles`
+        WHERE `is_deleted` = FALSE
+        ORDER BY `index` DESC
+    </select>
+    <select id="selectArticleByIndex"
+            resultType="com.escass.bbs.entities.ArticleEntity">
+        SELECT `index`       AS `index`,
+               `writer`      AS `writer`,
+               `title`       AS `title`,
+               `content`     AS `content`,
+               `created_at`  AS `createdAt`,
+               `modified_at` AS `modifiedAt`,
+               `view`        AS `view`,
+               `is_deleted`  AS `isDeleted`
+        FROM `test_bbs`.`articles`
+        WHERE `index` = #{index}
+          AND `is_deleted` = FALSE
+        LIMIT 1
+    </select>
+</mapper>

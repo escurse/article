@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>게시글 작성</title>
+    <link rel="stylesheet" th:href="@{./assets/styles/write.css}" type="text/css">
+    <script defer th:src="@{./assets/scripts/write.js}" type="text/javascript"></script>
+</head>
+<body>
+<h1>게시글 작성</h1>
+<form id="form">
+    <label class="label">
+        <span class="text">작성자</span>
+        <input name="writer" autofocus required maxlength="10" minlength="2" type="text">
+    </label>
+    <label class="label">
+        <span class="text">제목</span>
+        <input name="title" required maxlength="100" minlength="1" type="text">
+    </label>
+    <label class="label">
+        <span class="text">내용</span>
+        <textarea class="textarea" name="content" required maxlength="10000" minlength="1"></textarea>
+    </label>
+    <a th:href="@{../board/list}" target="_self">목록으로</a>
+    <button type="reset">초기화</button>
+    <button type="submit">작성</button>
+</form>
+</body>
+</html>

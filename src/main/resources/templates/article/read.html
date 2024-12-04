@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${article == null ? '오류' : '게시글 읽기'}"></title>
+    <script th:if="${article == null}">
+        alert("존재하지 않는 게시글입니다. 주소를 다시 확인해 주세요.")
+        if (history.length < 1) {
+            window.close();
+        } else {
+            history.back();
+        }
+    </script>
+</head>
+<body th:if="${article != null}">
+<h1>게시글 읽기</h1>
+<table border="1">
+    <tr>
+        <th>글 번호</th>
+        <td th:text="${article.getIndex()}"></td>
+        <th>작성자</th>
+        <td th:text="${article.getWriter()}"></td>
+        <th>조회수</th>
+        <td th:text="${article.getView()}"></td>
+    </tr>
+    <tr>
+        <th>작성일(수정일)</th>
+        <td colspan="5"
+            th:if="${article.getModifiedAt() != null}"
+            th:text="${#temporals.format(article.getCreatedAt(), 'yyyy-MM-dd HH:mm')} + '(' + ${article.getModifiedAt()} + ')'"></td>
+        <td colspan="5"
+            th:if="${article.getModifiedAt() == null}"
+            th:text="${#temporals.format(article.getCreatedAt(), 'yyyy-MM-dd HH:mm')} + '(수정되지 않음)'"></td>
+    </tr>
+    <tr>
+        <th>제목</th>
+        <td colspan="5" th:text="${article.getTitle()}"></td>
+    </tr>
+    <tr>
+        <th>내용</th>
+        <td colspan="5" th:text="${article.getContent()}"></td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            <a th:href="@{../board/list}" target="_self">목록으로</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
