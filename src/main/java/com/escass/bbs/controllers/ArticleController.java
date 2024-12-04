@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = "/article")
@@ -30,14 +31,18 @@ public class ArticleController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/write", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public String postWrite(ArticleEntity article) {
+    @RequestMapping(value = "/write", method = RequestMethod.POST)
+    public String postWrite(ArticleEntity article, RedirectAttributes redirectAttributes, ModelAndView modelAndView) {
         JSONObject response = new JSONObject();
         Result result = this.articleService.insertArticle(article);
-        response.put(Result.NAME, result.nameToLower());
-        response.put(Result.RESULT, article.getIndex());
-        return response.toString();
+//        response.put(Result.NAME, result.nameToLower());
+//        response.put(Result.RESULT, article.getIndex());
+        if (result.nameToLower().equals("success")) {
+            redirectAttributes.addAttribute("index", article.getIndex());
+            return "redirect:/article/read";
+        } else {
+            return "redirect:/article/write";
+        }
     }
 
     @RequestMapping(value = "/read", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
@@ -48,6 +53,7 @@ public class ArticleController {
             this.articleService.increaseArticleView(article);
             modelAndView.addObject("article", article);
         }
+        modelAndView.addObject("index", index);
         modelAndView.setViewName("article/read");
         return modelAndView;
     }
