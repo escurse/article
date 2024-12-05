@@ -30,10 +30,10 @@
         <th>작성일(수정일)</th>
         <td colspan="5"
             th:if="${article.getModifiedAt() != null}"
-            th:text="${#temporals.format(article.getCreatedAt(), 'yyyy-MM-dd HH:mm')} + '(' + ${article.getModifiedAt()} + ')'"></td>
+            th:text="${#temporals.format(article.getCreatedAt(), 'yyyy-MM-dd HH:mm:ss')} + '(' + ${#temporals.format(article.getModifiedAt(), 'yyyy-MM-dd HH:mm:ss')} + ')'"></td>
         <td colspan="5"
             th:if="${article.getModifiedAt() == null}"
-            th:text="${#temporals.format(article.getCreatedAt(), 'yyyy-MM-dd HH:mm')} + '(수정되지 않음)'"></td>
+            th:text="${#temporals.format(article.getCreatedAt(), 'yyyy-MM-dd HH:mm:ss')} + '(수정되지 않음)'"></td>
     </tr>
     <tr>
         <th>제목</th>

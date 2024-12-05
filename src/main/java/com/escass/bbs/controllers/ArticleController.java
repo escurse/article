@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,16 +33,14 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/write", method = RequestMethod.POST)
-    public String postWrite(ArticleEntity article, RedirectAttributes redirectAttributes, ModelAndView modelAndView) {
-        JSONObject response = new JSONObject();
+    public String postWrite(ArticleEntity article, RedirectAttributes redirectAttributes, Model model) {
         Result result = this.articleService.insertArticle(article);
-//        response.put(Result.NAME, result.nameToLower());
-//        response.put(Result.RESULT, article.getIndex());
         if (result.nameToLower().equals("success")) {
             redirectAttributes.addAttribute("index", article.getIndex());
             return "redirect:/article/read";
         } else {
-            return "redirect:/article/write";
+            model.addAttribute("alertMessage", "게시글 작성에 실패했습니다.");
+            return "article/write";
         }
     }
 

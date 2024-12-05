@@ -24,14 +24,12 @@ public class ArticleService {
         return articleMapper.selectArticleByIndex(index);
     }
 
-    public CommonResult increaseArticleView(ArticleEntity article) {
+    public void increaseArticleView(ArticleEntity article) {
         if (article == null) {
-            return CommonResult.FAILURE;
+            return;
         }
         article.setView(article.getView() + 1);
-        return this.articleMapper.updateArticle(article) > 0
-                ? CommonResult.SUCCESS
-                : CommonResult.FAILURE;
+        this.articleMapper.updateArticle(article);
     }
 
     public ArticleEntity[] selectArticles() {

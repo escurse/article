@@ -7,7 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>게시글 작성</title>
     <link rel="stylesheet" th:href="@{./assets/styles/write.css}" type="text/css">
-    <script defer th:src="@{./assets/scripts/write.js}" type="text/javascript"></script>
+<!--    <script defer th:src="@{./assets/scripts/write.js}" type="text/javascript"></script>-->
+    <script th:if="${alertMessage}" th:inline="javascript">
+        alert('게시글 작성에 실패하였습니다.');
+    </script>
 </head>
 <body>
 <h1>게시글 작성</h1>
