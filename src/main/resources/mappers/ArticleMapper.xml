@@ -37,6 +37,7 @@
         FROM `test_bbs`.`articles`
         WHERE `is_deleted` = FALSE
         ORDER BY `index` DESC
+        LIMIT #{limitCount} OFFSET #{offsetCount}
     </select>
     <select id="selectArticleByIndex"
             resultType="com.escass.bbs.entities.ArticleEntity">
@@ -52,5 +53,10 @@
         WHERE `index` = #{index}
           AND `is_deleted` = FALSE
         LIMIT 1
+    </select>
+    <select id="selectAllArticlesCount" resultType="_int">
+        SELECT COUNT(0)
+        FROM `test_bbs`.`articles`
+        WHERE `is_deleted` = FALSE;
     </select>
 </mapper>

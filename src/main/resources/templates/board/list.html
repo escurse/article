@@ -13,7 +13,7 @@
 <table border="1">
     <tr>
         <th>번호</th>
-        <th> 제목</th>
+        <th>제목</th>
         <th>조회수</th>
         <th>작성자</th>
         <th>작성일</th>
@@ -32,6 +32,17 @@
     <tr th:if="${articles == null || articles.length == 0}">
         <td colspan="5">게시글이 존재하지 않습니다.</td>
     </tr>
+    <tfoot>
+    <tr>
+        <td colspan="5">
+            <a th:if="${page > 0}"
+               th:each="page : ${#numbers.sequence(vos.movableMinPage, vos.movableMaxPage)}"
+               th:text="${page}"
+               th:style="'margin-right: 0.5rem;'"
+               th:href="@{'../../board/list' (page = ${page})}"></a>
+        </td>
+    </tr>
+    </tfoot>
 </table>
 <a class="button" th:href="@{'../../article/write'}">글 쓰기</a>
 </body>

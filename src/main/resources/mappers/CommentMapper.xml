@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.escass.bbs.mappers.CommentMapper">
+    <insert id="insertComment"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.escass.bbs.entities.CommentEntity">
+        INSERT INTO `test_bbs`.`comments` (article_index, writer, content, created_at, modified_at, is_deleted)
+        VALUES (#{articleIndex}, #{writer}, #{content}, #{createdAt}, #{modifiedAt}, #{isDeleted})
+    </insert>
+    <select id="selectCommentsByArticleIndex"
+            resultType="com.escass.bbs.entities.CommentEntity">
+        SELECT `index`         AS `index`,
+               `article_index` AS `articleIndex`,
+               `writer`        AS `writer`,
+               `content`       AS `content`,
+               `created_at`    AS `createdAt`,
+               `modified_at`   AS `modifiedAt`,
+               `is_deleted`    AS `isDeleted`
+        FROM `test_bbs`.`comments`
+        WHERE `is_deleted` = FALSE
+        AND `article_index` = #{articleIndex}
+        ORDER BY `index` DESC
+    </select>
+</mapper>

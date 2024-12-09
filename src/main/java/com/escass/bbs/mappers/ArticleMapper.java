@@ -7,9 +7,13 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface ArticleMapper {
     int insertArticle(ArticleEntity article);
+
     int updateArticle(ArticleEntity article);
 
-    ArticleEntity[] selectArticles();
+    int selectAllArticlesCount();
 
-    ArticleEntity selectArticleByIndex(@Param(value="index") int index);
+    ArticleEntity[] selectArticles(@Param(value = "limitCount") int limitCount,
+                                   @Param(value = "offsetCount") int offsetCount);
+
+    ArticleEntity selectArticleByIndex(@Param(value = "index") int index);
 }

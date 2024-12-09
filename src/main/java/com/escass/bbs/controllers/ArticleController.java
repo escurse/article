@@ -3,7 +3,8 @@ package com.escass.bbs.controllers;
 import com.escass.bbs.entities.ArticleEntity;
 import com.escass.bbs.results.Result;
 import com.escass.bbs.services.ArticleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.escass.bbs.services.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = "/article")
+@RequiredArgsConstructor
 public class ArticleController {
     private final ArticleService articleService;
-
-    @Autowired
-    public ArticleController(ArticleService articleService) {
-        this.articleService = articleService;
-    }
 
     @RequestMapping(value = "/write", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getWrite() {
